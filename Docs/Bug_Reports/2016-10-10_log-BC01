@@ -1,0 +1,16 @@
+2016-10-10_log-BC01
+
+Error:
+circular buffer error in live mode
+
+http://micro-manager.3463995.n2.nabble.com/java-OutOfMemoryError-and-ROI-issues-in-live-mode-td7584199.html
+
+
+Solution: 
+
+Edit sequence buffer size (Tools | Options).
+
+https://micro-manager.org/wiki/Micro-Manager_Configuration_Guide#Memory_Settings
+
+
+Set sequence buffer size to 150 MB to fix.
