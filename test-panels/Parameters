@@ -1,0 +1,80 @@
+//basic stuff to see if I can upload to github
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+public class Parameters {
+	
+
+	   public static void main(String[] args)
+	   {
+		 //testing...making sure this works
+	       DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+	       Date dateobj = new Date();
+	       System.out.println(df.format(dateobj));
+	   }
+	   
+	   public static void ChipID(double ID)
+	   {
+		   //do stuff here
+	   }
+	   //overloading -->not sure what the ID will be...we can delete later
+	   public static void ChipID(int ID)
+	   {
+		   //do stuff here
+	   }
+	   public static void ChipID(char ID)
+	   {
+		   //do stuff here
+	   }
+	   	   
+	   public static void SaveLoc(double x, double y, double z)
+	   {
+		    //do stuff here
+		   //assuming location is measured in x,y,z
+	   }
+	   //overloading just in case...we can delete later
+	   public static void SaveLoc(int x, int y, int z)
+	   {
+		    //do stuff here		   
+	   }
+	
+	
+	   public static void DateTime(String[] args)
+	   {
+		 //getting current date and time using Date class
+	       DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+	       Date dateobj = new Date();
+	       System.out.println(df.format(dateobj));
+
+	   }
+	   
+	   public static void StartPos(double xi, double yi, double zi)
+	   {
+		   //do stuff here		   
+	   }
+	   //again overloading cuz not sure what to expect we can delete afterwards
+	   public static void StartPos(int xi, int yi, int zi)
+	   {
+		   //do stuff here		   
+	   }
+	
+	   
+	   public static void ScanArea(double length, double width)
+	   {
+		   //do stuff here
+		   //assuming we are measuring a square/rectangle shape
+	   }
+	   
+	   
+	   public static void AvgImages(int images)
+	   {
+		   //average here
+	   }
+	   
+	   public static void NumofFrames (int frames)
+	   {
+		   //do stuff here
+	   }
+	   
+}
