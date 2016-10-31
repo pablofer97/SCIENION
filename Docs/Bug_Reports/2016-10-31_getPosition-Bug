@@ -1,0 +1,12 @@
+When using the beanshell script:
+
+  //Tried this random stuff
+  //mmc.setFocusDevice("yAxis");
+  //mmc.waitForDevice("yAxis");
+  //gui.sleep(10);
+
+  yStartPosUm = mmc.getPosition("yAxis");
+  gui.message("Y start pos: " +  yStartPosUm);
+
+It has to be run twice in order to update for the actual current position of the stage.  I have tried a lot of workarounds, and I think the problem is possibly the drivers Derin wrote, so we'll check that out tomorrow,
+
