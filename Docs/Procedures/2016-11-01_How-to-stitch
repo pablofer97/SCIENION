@@ -1,0 +1,36 @@
+Pseudocode:
+
+(1) Import sequence of Images: all images to stitch
+
+(2) Convert Stacks to Images
+
+  selectWindow("Green_Stack");
+  run("Stack to Images");
+
+(3) Convert Images to Stacks using naming conventions:
+
+
+  Blue_Stack ":1"
+  Green_Stack ":2"
+  Orange_Stack ":3"
+  Red_Stack ":4"
+  
+ So:
+
+  run("Images to Stack", "method=[Copy (center)] name=Green_Stack title=:2 use");
+  
+  
+(4) Save Stack as Blue_Stack01-Blue_Stack##
+
+  selectWindow("Green_Stack");
+  run("Image Sequence... ", "format=TIFF start=1 digits=2 save=C:\\User_Scratch\\SCIENION\\Data\\2016-10-31_happy-halloween\\chip5-mess-with\\Blue_stack\\Green_Stack01.tif");
+  
+(5) Stitch!
+
+  run("Grid/Collection stitching", "type=[Grid: column-by-column] order=[Down & Right                ] grid_size_x=2 grid_size_y=2 tile_overlap=0 first_file_index_i=1 directory=C:\\User_Scratch\\SCIENION\\Data\\2016-10-31_happy-halloween\\chip5-mess-with\\Blue_stack file_names=Green_Stack{ii}.tif output_textfile_name=TileConfiguration_Green.txt fusion_method=[Linear Blending] regression_threshold=0.30 max/avg_displacement_threshold=2.50 absolute_displacement_threshold=3.50 computation_parameters=[Save memory (but be slower)] image_output=[Fuse and display] use");
+
+  OR
+
+  run("Grid/Collection stitching", "type=[Grid: column-by-column] order=[Down & Right                ] grid_size_x=2 grid_size_y=2 tile_overlap=2 first_file_index_i=1 directory=C:\\User_Scratch\\SCIENION\\Data\\2016-10-31_happy-halloween\\chip5-mess-with\\Blue_stack file_names=Green_Stack{ii}.tif output_textfile_name=TileConfiguration_Green.txt fusion_method=[Linear Blending] regression_threshold=0.30 max/avg_displacement_threshold=2.50 absolute_displacement_threshold=3.50 computation_parameters=[Save memory (but be slower)] image_output=[Fuse and display]");
+
+  
