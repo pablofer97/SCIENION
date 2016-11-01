@@ -10,3 +10,6 @@ When using the beanshell script:
 
 It has to be run twice in order to update for the actual current position of the stage.  I have tried a lot of workarounds, and I think the problem is possibly the drivers Derin wrote, so we'll check that out tomorrow,
 
+FIX: 
+
+(1) Only operate stages with software, so the communication between the drivers and the stage is not compromised OR (2) write a homing function for the stages.
