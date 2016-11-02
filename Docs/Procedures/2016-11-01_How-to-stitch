@@ -34,3 +34,40 @@ Pseudocode:
   run("Grid/Collection stitching", "type=[Grid: column-by-column] order=[Down & Right                ] grid_size_x=2 grid_size_y=2 tile_overlap=2 first_file_index_i=1 directory=C:\\User_Scratch\\SCIENION\\Data\\2016-10-31_happy-halloween\\chip5-mess-with\\Blue_stack file_names=Green_Stack{ii}.tif output_textfile_name=TileConfiguration_Green.txt fusion_method=[Linear Blending] regression_threshold=0.30 max/avg_displacement_threshold=2.50 absolute_displacement_threshold=3.50 computation_parameters=[Save memory (but be slower)] image_output=[Fuse and display]");
 
   
+script1:
+
+import java.text.DecimalFormat;
+import ij.*;
+
+DecimalFormat FMT2 = new DecimalFormat("#00");
+
+String[] c = new String[4];
+		c[0] = "Blue";
+		c[1] = "Green";
+		c[2] = "Orange";
+		c[3] = "Red";
+
+userSavePath = "C:\\User_Scratch\\SCIENION\\Data\\2016-11-01_IgG-again\\";
+chipNumber = 1;
+overlap = 1;
+nXPos = 2;
+nYPos = 11;
+
+IJ.run("Image Sequence...", "open=" + userSavePath + "\\chip" + chipNumber + "_X1.0_Y1.0.tif file=chip" + chipNumber + " sort");
+
+IJ.run("Stack to Images");
+
+for(int iii = 0; iii<4; iii++){
+
+run("Images to Stack", "name=" c[iii] + "_Stack title=:" + (iii+1) + " use");
+
+selectWindow(c[iii]+"_Stack");
+run("Image Sequence... ", "format=TIFF start=1 digits=2 save=" + userSavePath + c[iii] 
++ "_Stack"+ FMT2.format(iii) +".tif");
+
+run("Grid/Collection stitching", "type=[Grid: column-by-column] order=[Down & Right                ] grid_size_x="+nXPos+" grid_size_y="+nYPos+" tile_overlap="+ overlap +" first_file_index_i=1 directory=" + userSavePath + "\\Blue_stack file_names=" c[iii] + "_Stack{ii}.tif output_textfile_name=TileConfiguration_" c[iii] + ".txt fusion_method=[Linear Blending] regression_threshold=0.30 max/avg_displacement_threshold=2.50 absolute_displacement_threshold=3.50 computation_parameters=[Save memory (but be slower)] image_output=[Fuse and display]");
+
+saveAs("Tiff", userSavePath + c[iii]  +"_Fused.tif");
+}
+
+
