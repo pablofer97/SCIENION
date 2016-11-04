@@ -1,0 +1,92 @@
+%%function inputs lamda values and material up to 3 layers 
+%%return rx,ry, tx,ty and plot lambda(on x-axis) vs reflectance (rx,ry)
+
+%Si
+lamda1= xlsread( 'wavelengthVSn.csv', 'A:A' ); %.25-0.8um
+n1 = xlsread( 'wavelengthVSn.csv', 'B:B' );
+%SiO2
+lamda2= xlsread( 'wavelengthVSnSiO2.csv', 'A:A' ); %0.3-1um
+n2 = xlsread( 'wavelengthVSnSiO2.csv', 'B:B' );
+
+
+newlamda1=lamda1(4:76);
+newlamda2=lamda2(3:23);
+
+n1new=n1(4:76);  %N samples  N>M
+n2new=n2(3:23);  %M samples
+
+d2=.25*newlamda2/n2new;
+
+opd=2*pi*(d2*n2new/newlamda2);
+
+figure(4)
+plot(opd,newlamda2)
+
+n2final=interp1(newlamda2,n2new,newlamda1);
+figure(2)
+plot(newlamda2,n2new,'o',newlamda1,n2final,':.');
+rx=((n1new-n2final)./(n1new+n2final));
+title('Refractive Index vs Lambda');
+ylabel('n') % x-axis label
+xlabel('lambda (um)') 
+figure(1)
+plot(newlamda1,abs(rx).^2);
+title('Power Reflectance');
+ylabel('|rx|^2') % x-axis label
+xlabel('lambda (um)')
+
+
+%%%%%%%%%
+function R=reflec(d, lamda, param)
+
+numofparam=length(param);
+inputs={'air', 'SiO2',20};
+inputs(1:numofparam)=param;
+[medium, film, temperature]=inputs{:};
+
+
+% theta=90;
+% lamda= xlsread( 'wavelengthVSn.csv', 'A:A' )
+% n = xlsread( 'wavelengthVSn.csv', 'B:B' )
+% % i=0;
+% % j=size(lamda)
+% % for i<size(lamda)
+% %     reflecarray=[lamda[i],n[i]];
+% i=i+1;
+% end
+% 
+% r=n(lamda)*cos(theta)
+
+theta=0; %angle of incidence 
+R=[];
+
+
+for n=1:length(lamda)
+    
+    % Decides on medium in use
+    %if strcmp (medium, 'water')
+      %  newMedium=waterRefractiveIndexTemp(lamda(n),temperature);
+    if strcmp (medium, 'air')
+        newMedium =1 ;
+    end
+    if strcmp(film,'SiO2')
+        newFilm=SiO2RefractiveIndexTemp(lamda(n),temperature);
+    elseif strcmp(film, 'PMMA')
+        newFilm=PMMARefractiveIndexTemp(lamda(n), temperature);
+    end
+    %put temp in docs-->txt file for java version
+    % Assumes we are using Si as a substrate 
+    newSubstrate= SiRefractiveIndexTemp(lamda(n),temperature);
+    
+    
+    %array with [medium type, film type, Si substrate]
+    newVec=[newMedium, newFilm, newSubstrate];
+    
+    %d,theta,lamda(n)-->newVec-->r
+    [r123,t123]=fres2(newVec,d,theta,lamda(n));
+    R(n)=abs(r);
+end
+if numofparam>3
+    error('Too many arguments.');
+end
+end
